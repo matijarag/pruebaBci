@@ -10,7 +10,7 @@
 - Seleccionar el archivo Spring Boot Application (buscar como @SpringBootApplication).
 - Click derecho sobre el archivo y Run as Java Application.
 - Listo, ya puedes probar el proyecto.
-
+- NOTA : No es necesario correr ningún Script de base de datos, ya que se genera automaticamente con la lógica ORM de Hibernate que está asociada a la Clase Usuario.
 ### API
 - Link [Swagger](https://app.swaggerhub.com/apis/matijarag/Prueba_BCI/1.0)
 ### Diagrama de la Solucion
