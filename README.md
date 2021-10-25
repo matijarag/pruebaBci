@@ -11,6 +11,8 @@
 - Click derecho sobre el archivo y Run as Java Application.
 - Listo, ya puedes probar el proyecto.
 
+###API
+- Link [Swagger](https://app.swaggerhub.com/apis/matijarag/Prueba_BCI/1.0)
 
 ### Ejemplos de prueba
 - La Url Correspondiente es "/api/usersAdd"
