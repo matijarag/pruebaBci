@@ -39,10 +39,12 @@ public class UsuarioController {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
+	/*Set REGEX de la password junto con su largo minimo y maximo*/
 	private String passwordMinLen = "8";
 	private String passwordMaxLen = "20";
 	private String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>_.]).{"+passwordMinLen+","+passwordMaxLen+"}$";
 	
+	/*Metodo get que busca todos los usuarios, devuelve una lista de objeto Usuario*/
 	@GetMapping("/users")
 	public ResponseEntity<List<Usuario>> getAllUsers(){
 		
@@ -53,9 +55,10 @@ public class UsuarioController {
 			usuarioRepository.findAll().forEach(usuarios::add);
 			
 			if(usuarios.isEmpty()) {
+				/*En el caso de no encontrar usuarios devuelve una respuesta vacia con Codigo 204 No Content*/
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
-			
+				/*En el caso de encontrar usuarios devuelve la lista con codigo 200 Ok*/
 			return new ResponseEntity<>(usuarios, HttpStatus.OK);
 		}catch(Exception e){
 			
@@ -65,9 +68,11 @@ public class UsuarioController {
 		
 	}
 	
+	/*Metodo para agregar usuario*/
 	@PostMapping("/usersAdd")
 	public ResponseEntity<Object> createUsuario(@RequestBody UsuarioJson usuario) {
 		try {
+			/*Definicion y preparacion de variables*/
 			ErrorMsg msgError = new ErrorMsg();
 			Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 			Date fecha = new Date(System.currentTimeMillis());
@@ -78,32 +83,36 @@ public class UsuarioController {
 			List<Phones> phones = usuario.getPhones();
 			String numero = "+"+phones.get(0).getContrycode()+phones.get(0).getCitycode()+phones.get(0).getNumber();
 			
+			/*Preparacion y creacion del JSON web token*/
 			String subject = name+email;
 			String jws = Jwts.builder().setSubject(subject).signWith(key).compact();
 			
+			/*Validacion de formato email*/
 			if(checkEmailFormat(email)==false) {
 				msgError.setMensaje("El correo no es válido");
 				return new ResponseEntity<>(msgError, HttpStatus.NOT_ACCEPTABLE);
 			}
-
+			/*Validacion de Existencia de email*/
 			else if(existsEmail(email)==true) {
 				
 				msgError.setMensaje("El correo ya se ha registrado");
 				return new ResponseEntity<>(msgError, HttpStatus.NOT_ACCEPTABLE);
 				
 			}
+			/*Validacion de formato password*/
 			else if (checkPasswordFormat(password)==false) {
 				
 				msgError.setMensaje("Formato de contraseña no válido, debe tener entre "+passwordMinLen +" y "+passwordMaxLen+" caracteres, componerse de minimo 1 numero, 1 letra minúscula, 1 letra mayúscula y un caracter especial");
 				return new ResponseEntity<>(msgError, HttpStatus.NOT_ACCEPTABLE);
 				
 			} else {
-				
+				/*Creacion del usuario en la base de datos*/
 				Usuario _usuario = usuarioRepository
 						.save(new Usuario(name, email, password, numero,fecha,fecha,fecha,jws,true));
 				
 				UUID uuid = UUID.randomUUID();
 				
+				/*Creacion del objeto a enviar en la Response utilizando datos del Usuario recien creado*/
 				Map<String, Object> map = new HashMap<String, Object>();
 	            map.put("id", uuid.toString());
 	            map.put("created", _usuario.getCreated());
@@ -121,6 +130,7 @@ public class UsuarioController {
 		}
 	}
 	
+	/*Metodo para validar existencia de email*/
 	public boolean existsEmail(String email) {
 		
 		List<Usuario> user = new ArrayList<Usuario>();
@@ -135,7 +145,7 @@ public class UsuarioController {
 		}
 	
 	}
-	
+	/*Metodo para validar formato email*/
 	public boolean checkEmailFormat(String email) {
 		
 		String regex = "^(.+)@(.+)$";
@@ -150,7 +160,7 @@ public class UsuarioController {
 			return false;
 		}
 	}
-	
+	/*Metodo para validar formato password*/
 	public boolean checkPasswordFormat(String password) {
 		
 		Pattern pattern = Pattern.compile(passwordPattern);
