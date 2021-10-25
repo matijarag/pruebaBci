@@ -13,7 +13,8 @@
 
 ### API
 - Link [Swagger](https://app.swaggerhub.com/apis/matijarag/Prueba_BCI/1.0)
-
+### Diagrama de la Solucion
+![Image](https://github.com/matijarag/pruebaBci/blob/master/mediaForReadme/PruebaBCIRest2.png)
 ### Ejemplos de prueba
 - La Url Correspondiente es "/api/usersAdd"
 - Password se debe componer de 1 letra minúscula , 1 letra mayúscula, 1 carácter especial , entre 8 a 20 caracteres.
