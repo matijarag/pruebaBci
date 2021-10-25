@@ -13,4 +13,20 @@
 
 
 ### Ejemplos de prueba
-
+- La Url Correspondiente es "/api/usersAdd"
+- Body:
+```
+{
+	"name":"Juan Rodriguez",
+	"email":"juan@rodriguez.org",
+	"password":"Abcde.144_",
+	"phones":[
+			{
+				"number":"487545",
+				"citycode":"3",
+				"contrycode":"56"
+			}
+	]
+}
+```
+![Image](https://github.com/matijarag/pruebaBci/blob/master/mediaForReadme/ss1.png)
