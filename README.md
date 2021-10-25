@@ -13,4 +13,21 @@
 
 
 ### Ejemplos de prueba
-
+- La Url Correspondiente es "/api/usersAdd"
+- Password se debe componer de 1 letra minúscula , 1 letra mayúscula, 1 carácter especial , entre 8 a 20 caracteres.
+- Body:
+```
+{
+	"name":"Juan Rodriguez",
+	"email":"juan@rodriguez.org",
+	"password":"Abcde.144_",
+	"phones":[
+			{
+				"number":"487545",
+				"citycode":"3",
+				"contrycode":"56"
+			}
+	]
+}
+```
+![Image](https://github.com/matijarag/pruebaBci/blob/master/mediaForReadme/ss1.png)
