@@ -14,6 +14,7 @@
 
 ### Ejemplos de prueba
 - La Url Correspondiente es "/api/usersAdd"
+- Password se debe componer de 1 letra minúscula , 1 letra mayúscula, 1 carácter especial , entre 8 a 20 caracteres.
 - Body:
 ```
 {
